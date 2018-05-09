@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #set -o xtrace
-readonly SCB_APP_VER="1.0.0"
+readonly SCB_APP_VER="1.0.1"
 source ./options.txt
 source ./common
 
