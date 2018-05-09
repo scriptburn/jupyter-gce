@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#set -o xtrace
+
+source ./options.txt
+source ./common
+
+
+SSH_KEY_JSON=$(ssh_key_part)
+
+readonly SSH_USER=$(echo $SSH_KEY_JSON | jq --raw-output .user)
+readonly SSH_USER_NAME=$(echo $SSH_KEY_JSON | jq --raw-output .user_name)
+readonly SSH_KEY=$(echo $SSH_KEY_JSON | jq --raw-output .ssh_key)
+
+
+auth
+
+
+create_vm "$SSH_USER" "$SSH_USER_NAME" "$SSH_KEY" "$PROJECT_ID" "jupyter-$(rand_word)"  
+
+#ip=$(echo $result | jq  --raw-output '.ip')
+#user_name=$(echo $result | jq  --raw-output '.user_name')
+#instance=$(echo $result | jq  --raw-output '.instance')
+#if [ -z "$ip" ];then
+#	error "Unable to create instance"
+#else
+#	information "VM instance has been created with ip: $ip"
+#	information "Web interface url: http://$ip:8888"
+#	information "You can login to SSH with: ssh $user_name@$ip"
+#fi
