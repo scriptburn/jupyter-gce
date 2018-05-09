@@ -1,0 +1,4 @@
+COMPUTE_KEY_FILE='jupyter-cloud-887c0448a198.json'
+LOG_FILE='gcloud.log'
+DEBUG=1
+WITH_SSH_KEYS=1
