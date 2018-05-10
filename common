@@ -3,19 +3,23 @@
 PROJECT_ID=""
 USER_NAME=""
 
+function_exists() {
+  # appended double quote is an ugly trick to make sure we do get a string -- if $1 is not a known command, type does not output anything
+  [ `type -t $1`"" == 'function' ]
+}
+
 cecho() {
 
-	declare -A colors
-	colors=(
-		['black']='\E[0;47m'
-		['red']='\E[0;31m'
-		['green']='\E[0;32m'
-		['yellow']='\E[0;33m'
-		['blue']='\E[0;34m'
-		['magenta']='\E[0;35m'
-		['cyan']='\E[0;36m'
-		['white']='\E[0;37m'
-	)
+		declare -a colors_i
+		local color_black='\E[0;47m'
+		local color_red='\E[0;31m'
+		local color_green='\E[0;32m'
+		local color_yellow='\E[0;33m'
+		local color_blue='\E[0;34m'
+		local color_magenta='\E[0;35m'
+		local color_cyan='\E[0;36m'
+		local color_white='\E[0;37m'
+	 
 
 	local defaultMSG="No message passed."
 	local defaultColor="black"
@@ -43,7 +47,9 @@ cecho() {
 	color=${color:-$defaultColor}
 	newLine=${newLine:-$defaultNewLine}
 
-	echo -en "${colors[$color]}"
+	color_name="color_$color"
+	color_name="${!color_name}"
+	echo -en "$color_name"
 	echo -en "$message"
 	if [ "$newLine" = true ]; then
 		echo
