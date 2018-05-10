@@ -4,11 +4,8 @@ readonly SCB_APP_VER="1.0.3"
 source ./options.txt
 source ./common
 
-a=$(jq 2>&1)
-a=$(strindex "$a" "command not found")
-if [ $a -gt -1 ];then
-    error "Please install 'jq' command"
-fi
+check_preq
+
 
  
 SSH_KEY_JSON=$(ssh_key_part)
