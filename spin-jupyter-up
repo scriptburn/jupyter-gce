@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #set -o xtrace
-readonly SCB_APP_VER="1.0.6"
+readonly SCB_APP_VER="1.0.7"
 if [ ! -f ./options.txt ]; then
 		error "File: options.txt not found"
 fi
@@ -25,7 +25,7 @@ INSTANCE_PASS="$INSTANCE_NAME"
 while getopts "vh?n:p:" opt; do
     case "$opt" in
     v)  
-        information "Application version: $SCB_APP_VER"
+        information "Version: $SCB_APP_VER"
         exit 0
         ;; 
     h|\?)
