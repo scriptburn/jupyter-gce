@@ -371,15 +371,15 @@ wait_for_vm() {
 create_vm() {
 	#"$SSH_USER" "$SSH_USER_NAME" "$SSH_KEY" "$PROJECT_ID"  "$(rand_word)" "pass"
 
-	SSH_KEY_STR=""
-	PROJECT=$4
-	INSTANCE_NAME=$5
+	local SSH_KEY_STR=""
+	local PROJECT=$4
+	local INSTANCE_NAME=$5
 	#INSTANCE_NAME="casting"
 	INSTANCE_NAME=$(trim_this "$INSTANCE_NAME")
-	PASSWORD=$6
+	local PASSWORD=$6
 	#OLD_DOCKER="instance-2"
-	OLD_DOCKER="unruffled_khorana"
-	NEW_DOCKER="datascience"
+	local OLD_DOCKER="unruffled_khorana"
+	local NEW_DOCKER="datascience"
 
 	#DOCKER_IMAGE="docker-image"
 	DOCKER_IMAGE="data-science-vm-docker-image"
@@ -399,7 +399,7 @@ create_vm() {
 	fi
 
 	PASS=$(sha1_pass "$PASSWORD")
-	#echo "$PASSWORD==>$PASS"
+	#echo "$INSTANCE_NAME::$PASSWORD==>$PASS"
 	COMMAND="sudo docker container kill $OLD_DOCKER ;
     sudo docker container rm  datascience;
     sudo docker run --name \"$NEW_DOCKER\" -d -p 8888:8888 jupyter/datascience-notebook start-notebook.sh --NotebookApp.password='$PASS' --NotebookApp.base_url=$INSTANCE_NAME;  
