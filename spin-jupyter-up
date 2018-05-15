@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #set -o xtrace
-readonly SCB_APP_VER="1.0.7"
+readonly SCB_APP_VER="1.0.8"
 if [ ! -f ./options.txt ]; then
 		error "File: options.txt not found"
 fi
@@ -20,7 +20,7 @@ OPTIND=1         # Reset in case getopts has been used previously in the shell.
 # Initialize our own variables:
 output_file=""
 INSTANCE_NAME="jupyter-$(rand_word)"
-INSTANCE_PASS="$INSTANCE_NAME"
+INSTANCE_PASS=""
 
 while getopts "vh?n:p:" opt; do
     case "$opt" in
