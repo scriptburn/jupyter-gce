@@ -1,12 +1,54 @@
 #!/usr/bin/env bash
 #set -o xtrace
-readonly SCB_APP_VER="1.0.8"
+readonly SCB_APP_VER="1.0.6"
+if [ ! -f ./options.txt ]; then
+		error "File: options.txt not found"
+fi
+if [ ! -f ./common ]; then
+		error "File: common not found"
+fi
+
+
 source ./options.txt
 source ./common
 
+
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+output_file=""
+INSTANCE_NAME="jupyter-$(rand_word)"
+INSTANCE_PASS="$INSTANCE_NAME"
+
+while getopts "vh?n:p:" opt; do
+    case "$opt" in
+    v)  
+        information "Application version: $SCB_APP_VER"
+        exit 0
+        ;; 
+    h|\?)
+        information "-n <instance name>       Create instance with this name"
+        information "-p <instance password>   Set this password for instance"
+        information "-v                       Show Application version"
+        exit 0
+        ;;
+    n)  INSTANCE_NAME=$OPTARG
+        ;;
+    p)  INSTANCE_PASS=$OPTARG
+        ;;
+       
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "${1:-}" = "--" ] && shift
+
+ 
+
 check_preq
-
-
  
 SSH_KEY_JSON=$(ssh_key_part)
 
@@ -18,7 +60,7 @@ readonly SSH_KEY=$(echo $SSH_KEY_JSON | jq --raw-output .ssh_key)
 auth
 
 
-create_vm "$SSH_USER" "$SSH_USER_NAME" "$SSH_KEY" "$PROJECT_ID" "jupyter-$(rand_word)"  
+create_vm "$SSH_USER" "$SSH_USER_NAME" "$SSH_KEY" "$PROJECT_ID" "$INSTANCE_NAME"  "$INSTANCE_PASS"
 
 #ip=$(echo $result | jq  --raw-output '.ip')
 #user_name=$(echo $result | jq  --raw-output '.user_name')
